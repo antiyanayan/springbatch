@@ -10,8 +10,9 @@ import org.springframework.messaging.handler.annotation.Header;
 public class CargoServiceActivator {
 	 private final Logger logger = LoggerFactory.getLogger(CargoServiceActivator.class);
 	 
-	 @ServiceActivator(inputChannel = "cargoTransformerOutputChannel")
-	 public void getCargo(CargoMessage message, @Header("CARGO_BATCH_ID") long batchId) {
+	 @ServiceActivator(inputChannel = "cargoTransformerOutputChannel", outputChannel = "cargoDefaultReplyChannel")
+	 public String getCargo(CargoMessage message, @Header("CARGO_BATCH_ID") long batchId) {
 		 logger.info(">>>>>>>>>>>>>>>>>>>>>>>>Message in Batch[{}] is received with payload : {}",batchId, message);
+		 return "<<<<<<<<<<<<<<<<<<<< Processed >>>>>>>>>>>>>>>>>>>>";
 	 }
 }

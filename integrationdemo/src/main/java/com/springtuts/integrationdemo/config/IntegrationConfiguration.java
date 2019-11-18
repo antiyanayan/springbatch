@@ -15,7 +15,13 @@ import org.springframework.messaging.MessageChannel;
 public class IntegrationConfiguration {
 
 	@Bean
-	public MessageChannel cargoDefaultChannel() {
+	public MessageChannel cargoDefaultRequestChannel() {
+		return new DirectChannel();
+	}
+	
+
+	@Bean
+	public MessageChannel cargoDefaultReplyChannel() {
 		return new DirectChannel();
 	}
 

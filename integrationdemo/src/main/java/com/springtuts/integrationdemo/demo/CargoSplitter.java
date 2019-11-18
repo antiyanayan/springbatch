@@ -10,7 +10,7 @@ import org.springframework.messaging.Message;
 public class CargoSplitter {
 
 	
-	@Splitter(inputChannel = "cargoDefaultChannel", outputChannel = "cargoSplitterOutputChannel")
+	@Splitter(inputChannel = "cargoDefaultRequestChannel", outputChannel = "cargoSplitterOutputChannel")
 	public List<Cargo> splitCargoLit(Message<List<Cargo>> message){
 		return message.getPayload();
 	}

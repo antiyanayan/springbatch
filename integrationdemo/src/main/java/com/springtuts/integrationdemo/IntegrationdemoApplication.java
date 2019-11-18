@@ -15,6 +15,9 @@ import org.springframework.integration.support.MessageBuilder;
 
 import com.springtuts.integrationdemo.demo.Cargo;
 import com.springtuts.integrationdemo.demo.Cargo.ShippingType;
+
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 import com.springtuts.integrationdemo.demo.ICargoGeteway;
 
 @SpringBootApplication
@@ -28,16 +31,17 @@ public class IntegrationdemoApplication {
 		logger.info(">>>>>>>>>>>>>>>>> Application started");
 
 		ICargoGeteway orderGateway = ctx.getBean(ICargoGeteway.class);
-
-		getCargoBatchMap().forEach((batchId, cargoList) -> orderGateway.processCargoRequest(
-				MessageBuilder.withPayload(cargoList).setHeader("CARGO_BATCH_ID", batchId).build()));
 		
 		Map<Integer, List<Cargo>> result = getCargoBatchMap();
+		
+		for(Map.Entry<Integer, List<Cargo>> r : result.entrySet()) {
+			String res = orderGateway.processCargoRequest(MessageBuilder.withPayload(r.getValue()).setHeader("CARGO_BATCH_ID", r.getKey()).build());
+			logger.info(res);
+		}
 	}
 
 	private static Map<Integer, List<Cargo>> getCargoBatchMap() {
 		Map<Integer, List<Cargo>> cargoBatchMap = new HashMap<>();
-
 		cargoBatchMap.put(1, Arrays.asList(
 
 				new Cargo.CargoBuilder(1, "Nayan Antiya", "Malad East, Mumbai", 0.5, ShippingType.DOMESTIC).setRegion(1)
