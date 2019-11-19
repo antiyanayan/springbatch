@@ -1,11 +1,11 @@
-package com.springtuts.integrationdemo.demo;
+package com.springtuts.integrationdemo.simplemessagetransfer;
 
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.integration.json.ObjectToJsonTransformer;
 
-import com.springtuts.integrationdemo.demo.DomesticCargoMessage.Region;
-import com.springtuts.integrationdemo.demo.InternationalCargoMessage.DeliveryOption;
+import com.springtuts.integrationdemo.simplemessagetransfer.DomesticCargoMessage.Region;
+import com.springtuts.integrationdemo.simplemessagetransfer.InternationalCargoMessage.DeliveryOption;
 
 @MessageEndpoint
 public class CargoTransformer {

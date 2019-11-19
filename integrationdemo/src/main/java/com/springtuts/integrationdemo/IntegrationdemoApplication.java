@@ -11,16 +11,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.integration.annotation.IntegrationComponentScan;
+import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.support.MessageBuilder;
+import org.springframework.util.SystemPropertyUtils;
 
-import com.springtuts.integrationdemo.demo.Cargo;
-import com.springtuts.integrationdemo.demo.Cargo.ShippingType;
-
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
-
-import com.springtuts.integrationdemo.demo.ICargoGeteway;
+import com.springtuts.integrationdemo.simplemessagetransfer.Cargo;
+import com.springtuts.integrationdemo.simplemessagetransfer.ICargoGeteway;
+import com.springtuts.integrationdemo.simplemessagetransfer.Cargo.ShippingType;
 
 @SpringBootApplication
+@ComponentScan("com.springtuts.integrationdemo")
+@EnableIntegration
+@IntegrationComponentScan("com.springtuts.integrationdemo")
 public class IntegrationdemoApplication {
 
 	private static Logger logger = LoggerFactory.getLogger(IntegrationdemoApplication.class);
@@ -31,13 +35,15 @@ public class IntegrationdemoApplication {
 		logger.info(">>>>>>>>>>>>>>>>> Application started");
 
 		ICargoGeteway orderGateway = ctx.getBean(ICargoGeteway.class);
-		
+
 		Map<Integer, List<Cargo>> result = getCargoBatchMap();
-		
-		for(Map.Entry<Integer, List<Cargo>> r : result.entrySet()) {
-			String res = orderGateway.processCargoRequest(MessageBuilder.withPayload(r.getValue()).setHeader("CARGO_BATCH_ID", r.getKey()).build());
+
+		for (Map.Entry<Integer, List<Cargo>> r : result.entrySet()) {
+			String res = orderGateway.processCargoRequest(
+					MessageBuilder.withPayload(r.getValue()).setHeader("CARGO_BATCH_ID", r.getKey()).build());
 			logger.info(res);
 		}
+		
 	}
 
 	private static Map<Integer, List<Cargo>> getCargoBatchMap() {
@@ -45,7 +51,7 @@ public class IntegrationdemoApplication {
 		cargoBatchMap.put(1, Arrays.asList(
 
 				new Cargo.CargoBuilder(1, "Nayan Antiya", "Malad East, Mumbai", 0.5, ShippingType.DOMESTIC).setRegion(1)
-						.setDescription("Radio").build(),
+						.setDescription("Radio").build(), 	
 				new Cargo.CargoBuilder(2, "Raj shah", "Dallas, India", 2_000, ShippingType.INTERNATIONAL)
 						.setDeliveryDayCommitment(3).setDescription("Furniture").build(),
 				new Cargo.CargoBuilder(3, "Tom Jerry", "Atlanta, USA", 5, ShippingType.INTERNATIONAL)

@@ -1,9 +1,9 @@
-package com.springtuts.integrationdemo.demo;
+package com.springtuts.integrationdemo.simplemessagetransfer;
 
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Router;
 
-import com.springtuts.integrationdemo.demo.Cargo.ShippingType;
+import com.springtuts.integrationdemo.simplemessagetransfer.Cargo.ShippingType;
 
 @MessageEndpoint
 public class CargoRouter {

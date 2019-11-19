@@ -1,4 +1,4 @@
-package com.springtuts.integrationdemo.demo;
+package com.springtuts.integrationdemo.simplemessagetransfer;
 
 import org.springframework.integration.annotation.Filter;
 import org.springframework.integration.annotation.MessageEndpoint;

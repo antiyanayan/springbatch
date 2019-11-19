@@ -1,4 +1,4 @@
-package com.springtuts.integrationdemo.demo;
+package com.springtuts.integrationdemo.simplemessagetransfer;
 
 import java.util.Arrays;
 

@@ -1,7 +1,7 @@
-package com.springtuts.integrationdemo.demo;
+package com.springtuts.integrationdemo.simplemessagetransfer;
 
-import com.springtuts.integrationdemo.demo.Cargo.CargoBuilder;
-import com.springtuts.integrationdemo.demo.Cargo.ShippingType;
+import com.springtuts.integrationdemo.simplemessagetransfer.Cargo.CargoBuilder;
+import com.springtuts.integrationdemo.simplemessagetransfer.Cargo.ShippingType;
 
 public class MainClass {
 	public static void main(String[] args) {
