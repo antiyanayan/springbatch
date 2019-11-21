@@ -1,25 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.springtus</groupId>
-	<artifactId>batchsession</artifactId>
+	<groupId>com.springtuts</groupId>
+	<artifactId>springbatchdemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>batchsession</name>
+	<name>springbatchdemo</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-version>5.2.0.RELEASE</spring-version>
-		<springbatch-version>4.2.0.RELEASE</springbatch-version>
-		<logback-version>1.2.3</logback-version>
 		<java-version>1.8</java-version>
-		<mysql-connector>8.0.15</mysql-connector>
+		<org.springframework-version>5.1.9.RELEASE</org.springframework-version>
+		<org.springframework.batch-version>4.2.0.RELEASE</org.springframework.batch-version>
 	</properties>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -28,42 +25,39 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-core</artifactId>
-			<version>${springbatch-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-infrastructure</artifactId>
-			<version>${springbatch-version}</version>
-		</dependency>
-
+		<!-- logging dependencies -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>${logback-version}</version>
-			<scope>test</scope>
+			<version>1.2.3</version>
 		</dependency>
 
+		<!-- Spring Dependencies -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql-connector}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+			<version>${org.springframework.batch-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-infrastructure</artifactId>
+			<version>${org.springframework.batch-version}</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.4.0</version>
+		</dependency> -->
 		
 	</dependencies>
 </project>
