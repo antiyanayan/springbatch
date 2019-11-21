@@ -39,7 +39,8 @@ public class OrderProcessingJobConfig {
 
 	@Bean
 	public Job orderProcessJob() {
-		return jobBuilderFactory.get("orderProcessJob").start(step1()).build();
+		return jobBuilderFactory.get("orderProcessJob")
+				.start(step1()).build();
 	}
 
 	@Bean

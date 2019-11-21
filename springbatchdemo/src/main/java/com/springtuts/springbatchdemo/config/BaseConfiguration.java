@@ -36,27 +36,16 @@ public class BaseConfiguration {
 		return dataSource;
 	}
 	
-	@Bean
-	public PlatformTransactionManager transactionManager() {
-		return new ResourcelessTransactionManager();
-	}
-	
-	@Bean
-	public JobRepository jobRepository() throws Exception {
-		JobRepositoryFactoryBean jobRepositoryFactoryBean = new JobRepositoryFactoryBean();
-		jobRepositoryFactoryBean.setDataSource(dataSource());
-		jobRepositoryFactoryBean.setTransactionManager(transactionManager());
-		jobRepositoryFactoryBean.afterPropertiesSet();
-		return jobRepositoryFactoryBean.getObject();
-	}
-	
-	/*@Bean
-	public JobLauncher JobLauncher() throws Exception {
-		SimpleJobLauncher simpleJobLauncher = new SimpleJobLauncher();
-		simpleJobLauncher.setJobRepository(jobRepository());
-		simpleJobLauncher.afterPropertiesSet();
-		return simpleJobLauncher;
-
-	}*/
-
+	/*
+	 * @Bean public PlatformTransactionManager transactionManager() { return new
+	 * ResourcelessTransactionManager(); }
+	 * 
+	 * @Bean public JobRepository jobRepository() throws Exception {
+	 * JobRepositoryFactoryBean jobRepositoryFactoryBean = new
+	 * JobRepositoryFactoryBean();
+	 * jobRepositoryFactoryBean.setDataSource(dataSource());
+	 * jobRepositoryFactoryBean.setTransactionManager(transactionManager());
+	 * jobRepositoryFactoryBean.afterPropertiesSet(); return
+	 * jobRepositoryFactoryBean.getObject(); }
+	 */
 }

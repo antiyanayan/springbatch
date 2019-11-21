@@ -1,4 +1,4 @@
-package com.springtuts.springbatchdemo;
+package com.springtus.batchsession;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
