@@ -5,23 +5,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.springtuts.springbatchdemo.config.BaseConfiguration;
-import com.springtuts.springbatchdemo.jobdemo.OrderProcessingJobConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
 	private static final Logger logger = LoggerFactory.getLogger(App.class);
 
+	static Job job;
+    static JobLauncher launcher;
+    static ClassPathXmlApplicationContext ctx;
+    private static String[] springConfig  = {"spring/batch/jobs/import-job-beans.xml" };
+	
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(BaseConfiguration.class,
-				OrderProcessingJobConfig.class);
+		
 
 		try {
-			ctx.registerShutdownHook();
+			ctx = new ClassPathXmlApplicationContext(springConfig);
 
-			JobLauncher launcher = ctx.getBean(JobLauncher.class);
-			Job job = ctx.getBean(Job.class, "orderProcessJob");
+			job = (Job) ctx.getBean("orderProcessJob");
+	        launcher = (JobLauncher) ctx.getBean("jobLauncher");    
 
 			JobParametersBuilder builder = new JobParametersBuilder();
 			builder.addString("JobId", Long.toString(System.currentTimeMillis()));
