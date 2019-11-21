@@ -11,7 +11,7 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.messaging.MessageChannel;
 
 @Configuration
-public class IntegrationConfiguration {
+public class ChannelConfiguration {
 
 	@Bean
 	public MessageChannel cargoDefaultRequestChannel() {
