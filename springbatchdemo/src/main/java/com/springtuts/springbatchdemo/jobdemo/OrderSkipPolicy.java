@@ -18,7 +18,7 @@ public class OrderSkipPolicy implements SkipPolicy {
 			return false;
 		}
 
-		else if (exception instanceof FlatFileParseException && skipCount < 1) {
+		else if (exception instanceof FlatFileParseException && skipCount < 0) {
 
 			FlatFileParseException ffpe = (FlatFileParseException) exception;
 			StringBuilder errorMessage = new StringBuilder();

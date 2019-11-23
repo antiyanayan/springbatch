@@ -4,11 +4,12 @@ import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.step.skip.SkipPolicy;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 
 
 @Configuration
@@ -32,12 +32,15 @@ public class OrderProcessingJobConfig {
 
 	@Autowired
 	DataSource dataSource;
+	
+	@Autowired
+	JobRegistry jobRegistry;
 
 	private static final String INPUT_DIR = "D:/Nayan/Logs/";
 	private static final String FILE_NAME = "orders.csv";
 	private static final String FILE_PATH = INPUT_DIR + FILE_NAME;
 
-	@Bean
+	@Bean(name = "orderProcessJob")
 	public Job orderProcessJob() {
 		return jobBuilderFactory.get("orderProcessJob")
 				.start(step1()).build();
@@ -48,7 +51,7 @@ public class OrderProcessingJobConfig {
 		return stepBuilderFactory.get("step1")
 				.<Order, Order>chunk(5)
 				.reader(reader())
-				.writer(writeToConsole())
+				.writer(writer())
 				.faultTolerant().skipPolicy(skipPolicy())
 				.build();
 	}
@@ -86,14 +89,16 @@ public class OrderProcessingJobConfig {
 		JdbcBatchItemWriter<Order> writer = new JdbcBatchItemWriter<>();
 		writer.setDataSource(dataSource);
 		writer.setSql(
-				"INSERT into N_ORDERS (orderId, item, address, supplier, price) VALUES (:orderId, :item, :address, :supplier, :price)");
+				"INSERT into ORDERS (orderId, item, address, supplier, price) VALUES (:orderId, :item, :address, :supplier, :price)");
 		writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Order>());
 		return writer;
 	}
 	
 	@Bean
-	public ItemWriter<Order> writeToConsole(){
-		return new WriteToConsole();
+	public JobRegistryBeanPostProcessor jobRegistryBeanPostProcessor() {
+		JobRegistryBeanPostProcessor beanPostProcessor = new JobRegistryBeanPostProcessor();
+		beanPostProcessor.setJobRegistry(jobRegistry);
+		return beanPostProcessor;
 	}
-
+	
 }
