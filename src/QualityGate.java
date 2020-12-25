@@ -4,8 +4,14 @@ import java.lang.*;
 // This class provides information of the QualityQate status
 public class QualityGate {
     
-    public static void main(String[] args) {
-      System.out.println("Failed");
+    private final boolean isPassed;
+    
+    public QualityGate(boolean isPassed) {
+        this.isPassed = isPassed;
+    }
+    
+    public boolean isPassed() {
+        return this.isPassed;
     }
 
 }
