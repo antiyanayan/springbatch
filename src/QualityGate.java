@@ -3,8 +3,14 @@ import java.lang.*;
 
 public class QualityGate {
     
-    public static void main(String[] args) {
-      System.out.println("Failed");
+    private final boolean isPassed;
+    
+    public QualityGate(boolean isPassed) {
+        this.isPassed = isPassed;
+    }
+    
+    public boolean isPassed() {
+        return this.isPassed;
     }
 
 }
