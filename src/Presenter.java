@@ -43,16 +43,13 @@ import de.otto.wsi.lisa.domain.ELSService;
 import de.otto.wsi.lisa.domain.model.WarehouseDetails;
 import de.otto.wsi.lisa.web.view.els.ELSPrintStream;
 import de.otto.wsi.lisa.web.view.els.ELSView;
-import de.otto.wsi.lisa.web.view.els.ELSViewHandler;
 import de.otto.wsi.lisa.web.view.els.FilterLayout;
 import de.otto.wsi.onda.domain.OrdersService;
 import de.otto.wsi.onda.domain.model.DeliveryInfo;
 import de.otto.wsi.onda.domain.model.OrderItemDetails;
 import de.otto.wsi.onda.domain.model.OrderSearchCriteria;
 
-@SuppressWarnings("deprecation")
-@NormalUIScoped
-public class ELSPresenter implements ELSViewHandler {
+public class ELSPresenter {
 
 
 	private static final String DATE_FORMAT_DD_MM_YYYY = "dd.MM.yyyy";
