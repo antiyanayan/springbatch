@@ -204,7 +204,6 @@ public class ELSPresenter {
 		view.getContentLayout().getContentData().setData(orderData);
 	}
 	
-	@SuppressWarnings("unchecked")
   private void setDailyOrderDataToContainer(IndexedContainer container, List<OrderItemDetails> orderData) {
       int totalRecordsOnTable = orderData.size();
       Object itemId;
@@ -253,7 +252,6 @@ public class ELSPresenter {
     
 	}
 	
-    @SuppressWarnings("unchecked")
     private void setELSDataToContainer(IndexedContainer container, List<OrderItemDetails> orderData) 
 	    throws ParseException {
 	  SimpleDateFormat dbDateInputFormat = new SimpleDateFormat(DATE_FORMAT_V2);
@@ -288,7 +286,6 @@ public class ELSPresenter {
       view.getContentLayout().checkCacheStatusAndSetELSButtons();
 	}
     
-  @Override
   public void addELS() {
     checkBoxesSelectedForELS = getSelectedCheckBoxes();
     orderDataELS = checkBoxesSelectedForELS.stream()
@@ -353,7 +350,6 @@ public class ELSPresenter {
     return orderData.stream().filter(o -> !StringUtils.isEmpty(o.getElsNo())).count();
   }
   
-  @Override
   public void appproveAndCacheOrders(boolean isApproved) {
     if(isApproved) {
       cacheOrdersForELS(orderDataELS, getELSNo());
@@ -408,7 +404,6 @@ public class ELSPresenter {
      * @param selected - boolean parameter. 
      * If parameter passed is true then all checkboxes are selected else all checkboxes are unselected.
      */
-    @Override
     public void toggleSelect(boolean selected) {
       Table contentData = view.getContentLayout().getContentData();
       IndexedContainer iContainer = (IndexedContainer) contentData.getContainerDataSource();
@@ -453,8 +448,6 @@ public class ELSPresenter {
         };
     }
     
-    @SuppressWarnings("unchecked")
-	@Override
 	public void displayELS() {
 		if (this.cachedOrders != null && !this.cachedOrders.isEmpty()) {
 			IndexedContainer container = view.getContentLayout().createContainer();
@@ -497,8 +490,6 @@ public class ELSPresenter {
 		view.getContentLayout().setELSAddButtonTo(enabled);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
 	public void createELS() {
 		view.getContentLayout().manageLocale();
 		if (this.cachedOrders != null && !this.cachedOrders.isEmpty()) {
@@ -577,7 +568,6 @@ public class ELSPresenter {
 		return saved;
 	}
 
-	@Override
 	public void print(boolean isELSPrintLabels, boolean fromCreateELSWindow) {
 	  FilterLayout filter = view.getELSFilterLayout();
 	  int sortNo = 4;
@@ -689,7 +679,6 @@ public class ELSPresenter {
 	}
 	
 
-	@Override
 	public void cancelELS() {    
 	  resetELSCachingDetails();
 		setELSNumberSaved(true);
