@@ -749,27 +749,26 @@ public class ELSPresenter {
 	  return StringUtils.equals(actualDate, date_01_01_0001) ? "" : actualDate;
 	}
 
-  private String getDateInGermanFormat(String date, SimpleDateFormat fromDateFormat) {
-    String dateInGermanFormat = "";
-    SimpleDateFormat germanDateFormat = new SimpleDateFormat(DATE_FORMAT_DD_MM_YYYY);
-    try {
-        dateInGermanFormat = germanDateFormat.format(fromDateFormat.parse(date));
-    } catch (ParseException defaultValue) {
-      return "";
-    }
-    return dateInGermanFormat;
-  }
+	private String getDateInGermanFormat(String date, SimpleDateFormat fromDateFormat) {
+		String dateInGermanFormat = "";
+		SimpleDateFormat germanDateFormat = new SimpleDateFormat(DATE_FORMAT_DD_MM_YYYY);
+		try {
+			dateInGermanFormat = germanDateFormat.format(fromDateFormat.parse(date));
+		} catch (ParseException defaultValue) {
+		return "";
+		}
+		return dateInGermanFormat;
+	}
 
-    public void setPositionCount(int positionCount) {
-      this.positionCount = positionCount;
-    }
+	public void setPositionCount(int positionCount) {
+		this.positionCount = positionCount;
+	}
 
-    public void setSelectedPositionCount(int selectedPositionCount) {
-      this.selectedPositionCount = selectedPositionCount;
-    }
-    
-    public List<OrderItemDetails> getOrderDataELS() {
-      return this.orderDataELS;
-    }
+	public void setSelectedPositionCount(int selectedPositionCount) {
+		this.selectedPositionCount = selectedPositionCount;
+	}
 
+	public List<OrderItemDetails> getOrderDataELS() {
+		return this.orderDataELS;
+	}
   }
