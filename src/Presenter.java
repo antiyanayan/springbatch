@@ -102,7 +102,6 @@ public class ELSPresenter {
 		super();
 	}
 
-	@Override
 	public void initialize(ELSView elsView, CommonServiceUtil commonServiceUtil, ELSService service,
 			OrdersService orderService) {
 		this.view = elsView;
@@ -131,13 +130,11 @@ public class ELSPresenter {
 		}
 	}
 
-	@Override
 	public void setDataToComponent() {
 		UserSessionDetails userDetails = AuthenticationUtil.getUserSessionDetails();
 		populateSubNumberList(userDetails.getFictitiousSupplierNumber());
 	}
 
-	@Override
 	public List<OrderItemDetails> searchDailyOrders(boolean isELSSearch, boolean isPrint, boolean printDO) {
 
 		List<OrderItemDetails> orderData = null;
