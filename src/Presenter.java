@@ -687,7 +687,6 @@ public class ELSPresenter {
 		refreshDailyOrders();
 	}
 	
-	@Override
 	public void resetELSCachingDetails() {
 	  cachedOrders.clear();
 	  orderDataELS.clear();
@@ -702,22 +701,18 @@ public class ELSPresenter {
 	  view.getELSFilterLayout().setPrintEnabled(true);
 	}
 	  
-    @Override
 	public void changeStatusOfSelection() {
 	  view.getContentLayout().setSelectedStatus(false);
 	}
     
-    @Override
 	public void clearTablePositionCount() {
 	  setPositionCount(0);
 	}
     
-    @Override
 	public void setSelectedPositionCount() {
 	  setSelectedPositionCount(view.getContentLayout().getRecordCount());
 	}
     
-    @Override
 	public void setSelectedPositionEmpty() {
 	  setSelectedPositionCount(0);
 	}
