@@ -11,4 +11,8 @@ public class SonaarQube {
   public QualityGate getQualityGate() {
     return this.gate;
   }
+
+  public void showResults() {
+    this.gate.showResults();
+  } 
 }
