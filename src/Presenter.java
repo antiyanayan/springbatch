@@ -713,10 +713,6 @@ public class ELSPresenter {
 	  setSelectedPositionCount(view.getContentLayout().getRecordCount());
 	}
     
-	public void setSelectedPositionEmpty() {
-	  setSelectedPositionCount(0);
-	}
-	
 	public boolean isELSNumberSaved() {
 	  return isELSNumberSaved;
 	}
