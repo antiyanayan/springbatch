@@ -1,3 +1,4 @@
 This is a new file for testing rebase.
 1
 2
+3
