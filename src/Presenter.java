@@ -724,14 +724,6 @@ public class ELSPresenter {
 	public void setELSNumberSaved(boolean isELSNumberSaved) {
 	  this.isELSNumberSaved = isELSNumberSaved;
 	}
-
-	public void setUnsavedElsNumber(String unsavedElsNumber) {
-	  this.unsavedElsNumber = unsavedElsNumber;
-	}
-
-	public String getWarehouse() {
-	  return warehouse;
-	}
 	  
 	public void setWarehouse(String warehouse) {
 	  this.warehouse = warehouse;
@@ -758,14 +750,6 @@ public class ELSPresenter {
 		return "";
 		}
 		return dateInGermanFormat;
-	}
-
-	public void setPositionCount(int positionCount) {
-		this.positionCount = positionCount;
-	}
-
-	public void setSelectedPositionCount(int selectedPositionCount) {
-		this.selectedPositionCount = selectedPositionCount;
 	}
 
 	public List<OrderItemDetails> getOrderDataELS() {
