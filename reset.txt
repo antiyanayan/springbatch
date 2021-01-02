@@ -2,3 +2,4 @@ this is a temp file for testing reset
 
 rebase text
 1
+2
