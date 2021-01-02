@@ -1,7 +1,6 @@
 import java.util.*;
 import java.lang.*;
 
-// Class for Sonar Analysis
 public class SonaarQube {
   private final QualityGate gate;
   
@@ -13,8 +12,7 @@ public class SonaarQube {
     return this.gate;
   }
 
-  public void getResults() {
-    // please show results.
-  }
-
+  public void showResults() {
+    this.gate.showResults();
+  } 
 }
