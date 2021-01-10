@@ -1,3 +1,6 @@
 this is a temp file for testing reset
 
 rebase text
+
+
+I want to test reset and recovering a reset
