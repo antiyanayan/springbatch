@@ -1,5 +1,7 @@
 package com.springtuts.springbatchdemo.jobdemo;
 
+import java.io.FileNotFoundException;
+
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
@@ -13,6 +15,7 @@ import org.springframework.batch.core.step.skip.SkipPolicy;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +55,11 @@ public class OrderProcessingJobConfig {
 				.<Order, Order>chunk(5)
 				.reader(reader())
 				.writer(writer())
-				.faultTolerant().skipPolicy(skipPolicy())
+				.faultTolerant()
+				.retryPolicy(new OrderProcessRetryPolicy())
+				.skipLimit(2)
+				.skip(FlatFileParseException.class)
+				.noSkip(FileNotFoundException.class)
 				.build();
 	}
 

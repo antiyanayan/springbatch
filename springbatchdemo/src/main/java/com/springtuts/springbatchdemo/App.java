@@ -11,6 +11,7 @@ import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobInstanceAlreadyExistsException;
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.launch.NoSuchJobException;
+import org.springframework.batch.core.launch.NoSuchJobExecutionException;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
@@ -36,30 +37,35 @@ public class App {
 			explorer = ctx.getBean(JobExplorer.class);
 			operator = ctx.getBean(JobOperator.class);
 			
-			
-			logger.info("Getting last job instance for \"{}\" job.", ORDER_PROCESS_JOB_NAME);
-			JobInstance instance = explorer.getLastJobInstance(ORDER_PROCESS_JOB_NAME);
-
-			if (instance == null) {
-				createAndRunNewJobInstance(ORDER_PROCESS_JOB_NAME);
-			} else {
-				logger.info("Found an instance for \"{}\" job with parameters = {}",
-						ORDER_PROCESS_JOB_NAME, instance.toString());
-				JobExecution exec = explorer.getLastJobExecution(instance);
-				if (exec.getStatus().equals(BatchStatus.FAILED)) {
-					long result = operator.restart(exec.getId());
-					logger.info("Exit status  -> {}", explorer.getJobExecution(result).getExitStatus());
-				} else {
-					createAndRunNewJobInstance(ORDER_PROCESS_JOB_NAME);
-				}
-			}
+			checkAndRunJobInstance(ORDER_PROCESS_JOB_NAME);
 
 		} catch (Exception e) {
-			logger.error("An Exception {} occured with message : {}", e.getClass(),
-					e.getMessage());
-			e.printStackTrace();
+			logger.error("An Exception occurred with description : ", e);
 		} finally {
 			ctx.close();
+		}
+	}
+
+	public static void checkAndRunJobInstance(String jobName)
+			throws NoSuchJobException, JobInstanceAlreadyExistsException, JobParametersInvalidException,
+			JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException,
+			NoSuchJobExecutionException {
+		
+		logger.info("Getting last job instance for \"{}\" job.", jobName);
+		JobInstance instance = explorer.getLastJobInstance(jobName);
+
+		if (instance == null) {
+			createAndRunNewJobInstance(jobName);
+		} else {
+			logger.info("Found an instance for \"{}\" job with parameters = {}", jobName,
+					instance.toString());
+			JobExecution exec = explorer.getLastJobExecution(instance);
+			if (exec.getStatus().equals(BatchStatus.FAILED)) {
+				long result = operator.restart(exec.getId());
+				logger.info("Exit status  -> {}", explorer.getJobExecution(result).getExitStatus());
+			} else {
+				createAndRunNewJobInstance(jobName);
+			}
 		}
 	}
 
@@ -69,7 +75,7 @@ public class App {
 
 		JobParametersBuilder builder = new JobParametersBuilder();
 		builder.addString("JobId", Long.toString(System.currentTimeMillis()));
-		String parameters = builder.toJobParameters().toString();		
+		String parameters = builder.toJobParameters().toString();
 		long result = operator.start(ORDER_PROCESS_JOB_NAME, parameters);
 		logger.info("Exit status  -> {}", explorer.getJobExecution(result).getExitStatus());
 	}

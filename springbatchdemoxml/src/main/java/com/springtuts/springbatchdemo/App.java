@@ -1,13 +1,8 @@
 package com.springtuts.springbatchdemo;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -37,8 +32,8 @@ public class App {
 			job = (Job) ctx.getBean("orderProcessJob");
 	        launcher = (JobLauncher) ctx.getBean("jobLauncher");    
 	        jobRepository = (JobRepository) ctx.getBean("jobRepository");
-	        explorer = ctx.getBean(JobExplorer.class);
-	        operator = ctx.getBean(JobOperator.class);
+	        //explorer = ctx.getBean(JobExplorer.class);
+	        //operator = ctx.getBean(JobOperator.class);
 	        
 	        
 	        
@@ -46,18 +41,12 @@ public class App {
 			builder.addString("JobId", Long.toString(System.currentTimeMillis()));
 			
 			
-			JobInstance instance = explorer.getLastJobInstance("orderProcessJob");
-			
-			
+			//JobInstance instance = explorer.getLastJobInstance("orderProcessJob");
+			launcher.run(job, builder.toJobParameters());
+			Thread.currentThread().join();
 			
 		} catch (Exception e) {
 			logger.error(">>> An Exception {} occured with message : {}", e.getClass(), e.getMessage());
-		} finally {
-			ctx.close();
 		}
-	}
-	
-	public static BatchStatus checkPreviousJobInstanceExitStatus(String jobName) {
-		return null;
 	}
 }
