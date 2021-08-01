@@ -32,16 +32,9 @@ public class App {
 			job = (Job) ctx.getBean("orderProcessJob");
 	        launcher = (JobLauncher) ctx.getBean("jobLauncher");    
 	        jobRepository = (JobRepository) ctx.getBean("jobRepository");
-	        //explorer = ctx.getBean(JobExplorer.class);
-	        //operator = ctx.getBean(JobOperator.class);
-	        
-	        
-	        
 			JobParametersBuilder builder = new JobParametersBuilder();
 			builder.addString("JobId", Long.toString(System.currentTimeMillis()));
 			
-			
-			//JobInstance instance = explorer.getLastJobInstance("orderProcessJob");
 			launcher.run(job, builder.toJobParameters());
 			Thread.currentThread().join();
 			

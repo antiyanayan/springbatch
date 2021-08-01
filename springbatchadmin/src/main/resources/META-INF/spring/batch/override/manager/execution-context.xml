@@ -19,7 +19,7 @@
 
     <!-- Bean representing the Job Repository -->
     <bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-        <property name="tablePrefix" value="${batch.job.repository.table.prefix:BATCH_}" />
+        <property name="tablePrefix" value="BATCH_" />
         <property name="dataSource" ref="jobRepositoryDataSource" />
         <property name="transactionManager" ref="transactionManager" />
         <property name="isolationLevelForCreate" value="ISOLATION_READ_COMMITTED" />
@@ -36,10 +36,10 @@
 
     <!-- Bean representing the Job Explorer -->
     <bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean"
-        p:table-prefix="${batch.job.repository.table.prefix:BATCH_}" p:dataSource-ref="jobRepositoryDataSource" />
+        p:table-prefix="BATCH_" p:dataSource-ref="jobRepositoryDataSource" />
 
     <bean id="jobService" class="org.springframework.batch.admin.service.SimpleJobServiceFactoryBean"
-        p:table-prefix="${batch.job.repository.table.prefix:BATCH_}">
+        p:table-prefix="BATCH_">
         <property name="jobRepository" ref="jobRepository" />
         <property name="jobLauncher" ref="jobLauncher" />
         <property name="jobLocator" ref="jobRegistry" />
@@ -50,7 +50,7 @@
     <bean id="jobLoader" class="org.springframework.batch.core.configuration.support.AutomaticJobRegistrar">
         <property name="applicationContextFactories">
             <bean class="org.springframework.batch.core.configuration.support.ClasspathXmlApplicationContextsFactoryBean">
-                <property name="resources" value="classpath*:spring/las-jobs/jobs/*.xml" />
+                <property name="resources" value="classpath*:spring/batch/jobs/*.xml" />
             </bean>
         </property>
         <property name="jobLoader">
@@ -60,58 +60,10 @@
         </property>
     </bean>
 
-    <!-- Profile 'production' -->
-    <beans profile="production">
-        <!-- Oracle DataSource [Spring Batch Job Repository] -->
-        <bean id="jobRepositoryDataSource" class="oracle.jdbc.pool.OracleDataSource">
-            <property name="URL" value="#{jdbcProperties['lasbatch.jdbc.url']}" />
-            <property name="loginTimeout" value="5" />
-            <property name="user" value="#{jdbcProperties['lasbatch.jdbc.username']}" />
-            <property name="password" value="#{jdbcProperties['lasbatch.jdbc.password']}" />
-        </bean>
-    </beans>
-
-    <!-- H2 Profile -->
-    <beans profile="local">
-        <!-- H2 DataSource [Spring Batch Job Repository] -->
-        <jdbc:embedded-database id="jobRepositoryDataSource" type="H2" generate-name="false"
-            database-name="spring-batch">
-            <jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-h2.sql" />
-            <jdbc:script location="classpath:/org/springframework/batch/core/schema-h2.sql" />
-        </jdbc:embedded-database>
-    </beans>
-    
-    <!-- Profile 'dss' -->
-	<beans profile="dss">
-		<!-- Oracle DataSource [Spring Batch Job Repository] -->
-		<bean id="jobRepositoryDataSource" class="oracle.jdbc.pool.OracleDataSource">
-			<property name="URL" value="#{jdbcProperties['lasbatch.jdbc.url']}" />
-			<property name="loginTimeout" value="5" />
-			<property name="user" value="#{jdbcProperties['lasbatch.jdbc.username']}" />
-			<property name="password" value="#{jdbcProperties['lasbatch.jdbc.password']}" />
-		</bean>
-	</beans>
-    
-    <!-- Profile 'pta' -->
-    <beans profile="pta">
-        <!-- Oracle DataSource [Spring Batch Job Repository] -->
-        <bean id="jobRepositoryDataSource" class="oracle.jdbc.pool.OracleDataSource">
-            <property name="URL" value="#{jdbcProperties['lasbatch.jdbc.url']}" />
-            <property name="loginTimeout" value="5" />
-            <property name="user" value="#{jdbcProperties['lasbatch.jdbc.username']}" />
-            <property name="password" value="#{jdbcProperties['lasbatch.jdbc.password']}" />
-        </bean>
-    </beans>
-    
-    <!-- profile for develop environment in OTTO network -->
-	<beans profile="develop">
-		<!-- Oracle DataSource [Spring Batch Job Repository] -->
-		<bean id="jobRepositoryDataSource" class="oracle.jdbc.pool.OracleDataSource">
-			<property name="URL" value="#{jdbcProperties['lasbatch.jdbc.url']}" />
-			<property name="loginTimeout" value="5" />
-			<property name="user" value="#{jdbcProperties['lasbatch.jdbc.username']}" />
-			<property name="password" value="#{jdbcProperties['lasbatch.jdbc.password']}" />
-		</bean>
-	</beans>
-
+  <bean id="jobRepositoryDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="org.postgresql.Driver" />
+    <property name="url" value="jdbc:postgresql://localhost:5432/postgres" />
+    <property name="username" value="postgres" />
+    <property name="password" value="pass" />
+  </bean>
 </beans> 

@@ -10,8 +10,8 @@
   <import resource="../config/spring-context.xml"/>
   <import resource="../config/spring-datasource.xml"/>
 
-  <bean id="order" class="com.springtuts.springbatchdemo.jobdemo.Order" scope="prototype"/>
-  <bean id="itemProcessor" class="com.springtuts.springbatchdemo.jobdemo.OrderItemProcessor"/>
+  <bean id="order" class="com.techvirus.springbatchadmin.jobdemo.Order" scope="prototype"/>
+  <bean id="itemProcessor" class="com.techvirus.springbatchadmin.jobdemo.OrderItemProcessor"/>
 
   <batch:job id="orderProcessJob" job-repository="jobRepository" restartable="true">
     <batch:step id="step1">
@@ -22,8 +22,8 @@
     </batch:step>
   </batch:job>
 
-  <bean id="orderCsvItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
-    <property name="resource" value="classpath:spring/batch/data/input/orders.csv"/>
+  <bean id="orderCsvItemReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+    <property name="resource" value="#{jobParameters['filename']}"/>
     <property name="linesToSkip" value="1"/>
     <property name="strict" value="true"/>
     <property name="lineMapper">
@@ -35,7 +35,7 @@
           </bean>
         </property>
         <property name="fieldSetMapper">
-          <bean class="com.springtuts.springbatchdemo.jobdemo.OrderFieldSetMapper"/>
+          <bean class="com.techvirus.springbatchadmin.jobdemo.OrderFieldSetMapper"/>
         </property>
       </bean>
     </property>
